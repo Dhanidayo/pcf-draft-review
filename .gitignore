@@ -1,0 +1,6 @@
+node_modules/
+out/
+obj/
+bin/
+DraftReview/generated/
+.DS_Store

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SarahAdebesin" constructor="DraftReview" version="0.1.0"
+           display-name-key="AI Draft Review"
+           description-key="Shows an AI-generated draft as plain text, flags content to check, and records a reviewer's decision."
+           control-type="virtual">
+    <external-service-usage enabled="false"></external-service-usage>
+    <property name="draftText" display-name-key="Draft text"
+              description-key="The AI-generated draft. Edits are written back to this column."
+              of-type="Multiple" usage="bound" required="true" />
+    <property name="reviewStatus" display-name-key="Review status"
+              description-key="pending, approved, edited or rejected."
+              of-type="SingleLine.Text" usage="bound" required="false" />
+    <property name="sourceLabel" display-name-key="Source label"
+              description-key="Where the draft came from, e.g. 'Drafted by AI from the client email'."
+              of-type="SingleLine.Text" usage="input" required="false" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <platform-library name="React" version="16.14.0" />
+      <platform-library name="Fluent" version="9.46.2" />
+    </resources>
+  </control>
+</manifest>

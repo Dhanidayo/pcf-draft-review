@@ -1,0 +1,34 @@
+{
+  "name": "pcf-draft-review",
+  "version": "0.1.0",
+  "description": "Power Apps code component for reviewing AI-generated drafts before they are used.",
+  "private": true,
+  "scripts": {
+    "build": "pcf-scripts build",
+    "clean": "pcf-scripts clean",
+    "rebuild": "pcf-scripts rebuild",
+    "start": "pcf-scripts start",
+    "start:watch": "pcf-scripts start watch",
+    "refreshTypes": "pcf-scripts refreshTypes",
+    "test": "node --test --experimental-strip-types DraftReview/__tests__/*.test.ts"
+  },
+  "dependencies": {
+    "@fluentui/react-components": "9.46.2",
+    "react": "16.14.0",
+    "react-dom": "16.14.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@microsoft/eslint-plugin-power-apps": "^0.5.1",
+    "@types/node": "^20.17.0",
+    "@types/powerapps-component-framework": "^1.3.18",
+    "@types/react": "^16.14.60",
+    "@types/react-dom": "^16.9.24",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.14.0",
+    "pcf-scripts": "^1.51.1",
+    "pcf-start": "^1.51.1",
+    "typescript": "^4.9.5",
+    "typescript-eslint": "^8.72.2"
+  }
+}
