@@ -2,6 +2,7 @@
   "name": "pcf-draft-review",
   "version": "0.1.0",
   "description": "Power Apps code component for reviewing AI-generated drafts before they are used.",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "build": "pcf-scripts build",

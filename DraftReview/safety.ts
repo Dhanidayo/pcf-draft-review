@@ -1,4 +1,3 @@
-/** Review states written back to the record. */
 export type ReviewStatus = "pending" | "approved" | "edited" | "rejected";
 
 export const REVIEW_STATUSES: readonly ReviewStatus[] = [
@@ -8,7 +7,6 @@ export const REVIEW_STATUSES: readonly ReviewStatus[] = [
   "rejected",
 ];
 
-/** Something in a draft a reviewer should check before it is sent. */
 export interface DraftFlag {
   kind: "link" | "email" | "markup";
   message: string;
@@ -17,7 +15,77 @@ export interface DraftFlag {
 
 const LINK = /\b(?:https?:\/\/|www\.)[^\s<>"')]+/gi;
 const EMAIL = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
-const MARKUP = /<\s*\/?\s*[a-z][^>]*>|\bon[a-z]+\s*=|javascript:/gi;
+/**
+ * HTML element names worth flagging. A known list rather than "any word after <",
+ * so ordinary text like "x < 5 and y > 2" or "Ana <ana@example.com>" is not flagged.
+ */
+const TAG_NAMES = [
+  "a",
+  "applet",
+  "audio",
+  "b",
+  "base",
+  "body",
+  "br",
+  "button",
+  "center",
+  "code",
+  "div",
+  "em",
+  "embed",
+  "font",
+  "form",
+  "frame",
+  "frameset",
+  "h[1-6]",
+  "head",
+  "hr",
+  "html",
+  "i",
+  "iframe",
+  "img",
+  "input",
+  "link",
+  "li",
+  "marquee",
+  "math",
+  "meta",
+  "object",
+  "ol",
+  "option",
+  "p",
+  "pre",
+  "script",
+  "select",
+  "source",
+  "span",
+  "strong",
+  "style",
+  "svg",
+  "table",
+  "td",
+  "textarea",
+  "th",
+  "tr",
+  "u",
+  "ul",
+  "video",
+].join("|");
+
+const MARKUP = new RegExp(
+  [
+    // An HTML tag: "<" straight after by a known element name, e.g. <img ...>, </div>.
+    `</?(?:${TAG_NAMES})\\b[^<>]*>`,
+    // An HTML comment.
+    "<!--",
+    // An event handler with a quoted value, e.g. onerror="...". "online = yes" is not one.
+    "\\bon[a-z]{3,}\\s*=\\s*[\"'`]",
+    // A script URL, e.g. javascript:alert(1). "JavaScript: a language" is not one.
+    "\\b(?:java|vb)script:(?=\\S)",
+    "\\bdata:text/html",
+  ].join("|"),
+  "gi",
+);
 
 /**
  * Normalises a stored status value, treating anything unknown as pending.

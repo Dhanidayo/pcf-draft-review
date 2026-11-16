@@ -59,13 +59,6 @@ const useStyles = makeStyles({
   badge: { whiteSpace: "nowrap", flexShrink: 0 },
 });
 
-/**
- * Review panel for an AI-generated draft: plain-text preview, content flags,
- * and approve / edit / reject actions.
- *
- * @param props - draft, current status and the decision callback
- * @returns the panel
- */
 export function DraftReviewPanel({
   draft,
   status,
@@ -126,7 +119,6 @@ export function DraftReviewPanel({
 
         {hasDraft && !editing && (
           <div className={styles.stack}>
-            {/* Rendered as text, never as HTML: React escapes it, so model output cannot inject markup. */}
             <Text className={styles.draft} as="p">
               {draft}
             </Text>

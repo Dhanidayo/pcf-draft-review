@@ -47,3 +47,7 @@ npm start watch     # open the PCF test harness at http://localhost:8181
 In the harness, set `draftText`, `reviewStatus` and `sourceLabel` under **Data Inputs** to try it.
 
 To deploy to an environment, package it with the [Power Platform CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction): `pac auth create`, then `pac pcf push --publisher-prefix <prefix>`.
+
+## Licence
+
+[MIT](LICENSE)
