@@ -1,7 +1,12 @@
 /** Review states written back to the record. */
 export type ReviewStatus = "pending" | "approved" | "edited" | "rejected";
 
-export const REVIEW_STATUSES: readonly ReviewStatus[] = ["pending", "approved", "edited", "rejected"];
+export const REVIEW_STATUSES: readonly ReviewStatus[] = [
+  "pending",
+  "approved",
+  "edited",
+  "rejected",
+];
 
 /** Something in a draft a reviewer should check before it is sent. */
 export interface DraftFlag {
@@ -22,7 +27,9 @@ const MARKUP = /<\s*\/?\s*[a-z][^>]*>|\bon[a-z]+\s*=|javascript:/gi;
  */
 export function toReviewStatus(value: string | null | undefined): ReviewStatus {
   const v = (value ?? "").trim().toLowerCase();
-  return (REVIEW_STATUSES as readonly string[]).includes(v) ? (v as ReviewStatus) : "pending";
+  return (REVIEW_STATUSES as readonly string[]).includes(v)
+    ? (v as ReviewStatus)
+    : "pending";
 }
 
 /**
@@ -39,15 +46,28 @@ export function findDraftFlags(draft: string): DraftFlag[] {
 
   const markup = unique(MARKUP);
   if (markup.length) {
-    flags.push({ kind: "markup", message: "Contains HTML or script-like text. It is shown as plain text; remove it before sending.", matches: markup });
+    flags.push({
+      kind: "markup",
+      message:
+        "Contains HTML or script-like text. It is shown as plain text; remove it before sending.",
+      matches: markup,
+    });
   }
   const links = unique(LINK);
   if (links.length) {
-    flags.push({ kind: "link", message: "Contains links. Check each one is real and intended.", matches: links });
+    flags.push({
+      kind: "link",
+      message: "Contains links. Check each one is real and intended.",
+      matches: links,
+    });
   }
   const emails = unique(EMAIL);
   if (emails.length) {
-    flags.push({ kind: "email", message: "Contains email addresses. Check they are correct.", matches: emails });
+    flags.push({
+      kind: "email",
+      message: "Contains email addresses. Check they are correct.",
+      matches: emails,
+    });
   }
   return flags;
 }

@@ -1,10 +1,14 @@
+/// <reference types="powerapps-component-framework" />
+
 import * as React from "react";
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { DraftReviewPanel } from "./DraftReviewPanel";
 import { ReviewStatus, toReviewStatus } from "./safety";
 
 /** PCF entry point: binds the review panel to the draft and status columns. */
-export class DraftReview implements ComponentFramework.ReactControl<IInputs, IOutputs> {
+export class DraftReview
+  implements ComponentFramework.ReactControl<IInputs, IOutputs>
+{
   private notifyOutputChanged!: () => void;
   private outputs: IOutputs = {};
 
@@ -14,7 +18,10 @@ export class DraftReview implements ComponentFramework.ReactControl<IInputs, IOu
    * @param context - the framework context
    * @param notifyOutputChanged - tells the framework new outputs are ready
    */
-  public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void): void {
+  public init(
+    context: ComponentFramework.Context<IInputs>,
+    notifyOutputChanged: () => void,
+  ): void {
     this.notifyOutputChanged = notifyOutputChanged;
   }
 
@@ -24,7 +31,9 @@ export class DraftReview implements ComponentFramework.ReactControl<IInputs, IOu
    * @param context - the framework context
    * @returns the React element to render
    */
-  public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
+  public updateView(
+    context: ComponentFramework.Context<IInputs>,
+  ): React.ReactElement {
     return React.createElement(DraftReviewPanel, {
       draft: context.parameters.draftText.raw ?? "",
       status: toReviewStatus(context.parameters.reviewStatus.raw),

@@ -4,3 +4,4 @@ obj/
 bin/
 DraftReview/generated/
 .DS_Store
+/~/
