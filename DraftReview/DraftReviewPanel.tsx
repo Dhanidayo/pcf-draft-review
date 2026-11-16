@@ -69,22 +69,31 @@ export function DraftReviewPanel({
   const styles = useStyles();
 
   const [editing, setEditing] = React.useState<boolean>(false);
-  const [edited, setEdited] = React.useState<string>(draft);
+  // The reviewer's saved edit, shown until the host passes back a new draft.
+  // Some hosts (the test harness, a canvas app without Patch) never do.
+  const [saved, setSaved] = React.useState<string | null>(null);
+  const current = saved ?? draft;
+  const [edited, setEdited] = React.useState<string>(current);
 
   React.useEffect(() => {
-    if (!editing) setEdited(draft);
-  }, [draft, editing]);
+    setSaved(null);
+  }, [draft]);
+
+  React.useEffect(() => {
+    if (!editing) setEdited(current);
+  }, [current, editing]);
 
   const flags: DraftFlag[] = React.useMemo(
-    () => findDraftFlags(draft),
-    [draft],
+    () => findDraftFlags(current),
+    [current],
   );
   const appearance = statusAppearance[status];
-  const hasDraft = draft.trim().length > 0;
+  const hasDraft = current.trim().length > 0;
   const decided = status !== "pending";
 
   const saveEdit = () => {
     setEditing(false);
+    setSaved(edited);
     onDecision(edited, "edited");
   };
 
@@ -120,7 +129,7 @@ export function DraftReviewPanel({
         {hasDraft && !editing && (
           <div className={styles.stack}>
             <Text className={styles.draft} as="p">
-              {draft}
+              {current}
             </Text>
             {flags.map((flag) => (
               <MessageBar
@@ -161,7 +170,7 @@ export function DraftReviewPanel({
               <Button
                 onClick={() => {
                   setEditing(false);
-                  setEdited(draft);
+                  setEdited(current);
                 }}
               >
                 Cancel
@@ -171,7 +180,7 @@ export function DraftReviewPanel({
             <>
               <Button
                 appearance="primary"
-                onClick={() => onDecision(draft, "approved")}
+                onClick={() => onDecision(current, "approved")}
                 disabled={disabled || !hasDraft || decided}
               >
                 Approve
@@ -183,7 +192,7 @@ export function DraftReviewPanel({
                 Edit
               </Button>
               <Button
-                onClick={() => onDecision(draft, "rejected")}
+                onClick={() => onDecision(current, "rejected")}
                 disabled={disabled || !hasDraft || status === "rejected"}
               >
                 Reject
@@ -191,7 +200,7 @@ export function DraftReviewPanel({
               {decided && (
                 <Button
                   appearance="subtle"
-                  onClick={() => onDecision(draft, "pending")}
+                  onClick={() => onDecision(current, "pending")}
                   disabled={disabled}
                 >
                   Reopen

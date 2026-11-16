@@ -4,7 +4,7 @@ A Power Apps (PCF) control for the step every AI workflow needs: a person checki
 
 Works in **model-driven apps** and **canvas apps**. Built with TypeScript, React and Fluent UI 9 as a virtual control, so React and Fluent load from the platform and the bundle stays small.
 
-![The review panel in the PCF test harness](docs/draft-review.png)
+![Reviewing a draft in the PCF test harness: the warnings, then Edit, Save and approve](docs/draft-review.gif)
 
 ## What it does
 
@@ -34,7 +34,20 @@ The control does not send anything itself. It records the decision, and your own
 
 Values are always written in lowercase. When reading, the control ignores case and treats an empty or unknown value as `pending` (shown as "Needs review").
 
-## Installing it
+## Download
+
+Get the latest solution from the [Releases page](https://github.com/Dhanidayo/pcf-draft-review/releases/latest) and import it in [Power Apps](https://make.powerapps.com) under **Solutions → Import solution**.
+
+| File | Choose it if |
+| --- | --- |
+| `AIDraftReview_<version>_managed.zip` | You want to use the control. Recommended: it installs and uninstalls cleanly. |
+| `AIDraftReview_<version>.zip` | You want to customise the control inside your environment (unmanaged). |
+
+The control is tested in the PCF test harness. If the import or the control does not work in your environment, please [open an issue](https://github.com/Dhanidayo/pcf-draft-review/issues).
+
+**For canvas apps**, an admin must also turn on code components for the environment: in the [Power Platform admin center](https://admin.powerplatform.microsoft.com), open the environment, then go to **Settings → Product → Features** and turn on **Allow publishing of canvas apps with code components**.
+
+## Building from source
 
 You need:
 
@@ -52,7 +65,7 @@ pac pcf push --publisher-prefix <prefix>
 
 `pac pcf push` builds the control and imports it into your environment in a solution named `PowerAppsTools_<prefix>`.
 
-**For canvas apps**, an admin must also turn on code components for the environment: in the [Power Platform admin center](https://admin.powerplatform.microsoft.com), open the environment, then go to **Settings → Product → Features** and turn on **Allow publishing of canvas apps with code components**.
+For canvas apps, turn on code components first, as described under [Download](#download).
 
 ## Using it in a model-driven app
 
