@@ -1,6 +1,6 @@
 # AI Draft Review: a Power Apps code component
 
-A Power Apps Component Framework (PCF) control for the step every AI workflow needs: a person checking the AI's draft before it is used. Built with TypeScript, React and Fluent UI 9 as a virtual control, so React and Fluent load from the platform.
+A Power Apps (PCF) virtual control for human-in-the-loop AI review—giving users a clean interface to inspect and approve AI-generated drafts before they are used. Built with TypeScript, React, and Fluent UI 9, leveraging platform-provided libraries for a lightweight footprint.
 
 ![The review panel in the PCF test harness](docs/draft-review.png)
 
